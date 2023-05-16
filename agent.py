@@ -61,7 +61,6 @@ class Agent(nn.Module):
             state = states[i]
             x = state
             for j in range(len(self.weightsVec[i].layers)):
-                #print(i)
                 x = self.weightsVec[i].layers[j](x)
                 if j != len(self.weightsVec[i].layers) - 1:
                     x = F.relu(x)
@@ -76,7 +75,6 @@ class Agent(nn.Module):
         episode_returns = {}
         terminated = []
         for i in range(num_agents):
-            #print("weights during ", weights)
             terminated.append(False)
             self.weightsVec[i].set_weights(weights[i])
             episode_returns.update({i: 0})

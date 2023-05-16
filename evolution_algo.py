@@ -1,5 +1,6 @@
 from torch.multiprocessing import set_start_method
 from torch.multiprocessing import freeze_support
+from typing import List
 
 import gym
 import random
@@ -45,18 +46,15 @@ def update_weights(weights, indices, alpha, std, rewards):
     deltas = alpha / (n * std) * np.dot(reconstructed_weights.T, scaled_rewards)
     return weights + deltas
 
-def evolution(n_iterations=400, max_t=2000, alpha = 0.01, gamma=1.0, std=0.1):
-    """Deep Q-Learning.
-    
-    Params
-    ======
-        n_iterations (int): number of episodes used to train the agent
-        max_t (int): maximum number of timesteps per episode
-        alpha (float): iteration step 
-        gamma (float): discount rate
-        population (int): size of population at each iteration
-        std (float): standard deviation of additive noise
-    """    
+def evolution(
+        n_iterations=400, # number of episodes used to train the agent
+        max_t=2000, # maximum number of timesteps per episode
+        alpha = 0.01, # iteration step
+        gamma=1.0, # discount rate
+        std=0.1 # standard deviation of additive noise
+    ) -> List:
+    """Using Deep Q-learning""" 
+
     scores_deque = deque(maxlen=100)
     scores = []
     current_weights = []
@@ -108,4 +106,4 @@ if __name__ == '__main__':
     plt.plot(np.arange(len(scores)), scores)
     plt.ylabel('Score')
     plt.xlabel('Episode #')
-    plt.savefig('evolution_algo.png')
+    plt.savefig(f'evolution_algo_with_{num_agents}_agents.png')

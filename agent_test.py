@@ -13,7 +13,6 @@ class AgentTest(nn.Module):
     def __init__(self, env, state_size, action_size, h_sizes=[256,128], seed=0):
         super(AgentTest, self).__init__()
         self.env = env
-        # state, hidden layer, action sizes
         self.s_size = state_size
         self.h_sizes = h_sizes
         self.a_size = action_size
@@ -32,7 +31,6 @@ class AgentTest(nn.Module):
     def forward(self, state):
         x = state
         for i in range(len(self.layers)):
-            #print(i)
             x = self.layers[i](x)
             if i != len(self.layers) - 1:
                 x = F.relu(x)
@@ -46,7 +44,6 @@ class AgentTest(nn.Module):
         a_size = self.a_size
         sizes = self.layer_sizes
 
-        # separate the weights for each layer
         fc_W = [0 for i in range(len(sizes) - 1)]
         fc_b = [0 for i in range(len(sizes) - 1)]
         start = 0
@@ -56,7 +53,6 @@ class AgentTest(nn.Module):
             fc_b[i] = torch.from_numpy(weights[start + sizes[i]*sizes[i+1] : end])
             start = end
         
-            # set the weights for each layer
             self.layers[i].weight.data.copy_(fc_W[i].view_as(self.layers[i].weight.data))
             self.layers[i].bias.data.copy_(fc_b[i].view_as(self.layers[i].bias.data))
     

@@ -15,17 +15,17 @@ from agent_test import AgentTest
 
 agent = AgentTest(env, state_size=4, action_size=2)
 
-def evolution(n_iterations=1000, max_t=2000, gamma=1.0, population=20, elite_frac=0.4, std=0.2):
-    """Deep Q-Learning.
+def evolution(
+        n_iterations=1000, # number of episodes used to train the agent
+        max_t=2000, # maximum number of timesteps per episode
+        gamma=1.0, # discount rate
+        population=20, # size of population at each iteration
+        elite_frac=0.4, # proportion of the population for selection
+        std=0.2 # standard deviation of additive noise
+    ):
     
-    Params
-    ======
-        n_iterations (int): number of episodes used to train the agent
-        max_t (int): maximum number of timesteps per episode
-        gamma (float): discount rate
-        population (int): size of population at each iteration
-        std (float): standard deviation of additive noise
-    """
+    """Using Deep Q-learning"""
+
     scores_deque = deque(maxlen=100)
     scores = []
     n_elite=int(population*elite_frac)

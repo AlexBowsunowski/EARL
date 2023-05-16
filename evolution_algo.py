@@ -20,7 +20,7 @@ from agent import Agent
 from agent_test import AgentTest
 
 #Number of agents working in parallel
-num_agents = 2
+num_agents = 1
 agents = []
 for i in range(num_agents):
     env = gym.make('CartPole-v1')
@@ -83,13 +83,13 @@ def evolution(
         torch.save(agent.state_dict(), 'evolution_algo_checkpoint.pth')
         
         if i_iteration % 1 == 0:
-            print('Episode {}\tAverage Score: {:.2f}'.format(i_iteration, np.mean(scores_deque)))
+            print(f'Episode {i_iteration}\tAverage Score: {np.mean(scores_deque)}')
         if i_iteration % 100 == 0:
             elapsed_time = time.time() - start_time
             print("Duration: ", elapsed_time)
 
         if np.mean(scores_deque)>=195.0:
-            print('\nEnvironment solved in {:d} iterations!\tAverage Score: {:.2f}'.format(i_iteration-100, np.mean(scores_deque)))
+            print(f'Environment solved in {i_iteration-100} iterations!\tAverage Score: {np.mean(scores_deque)}')
             elapsed_time = time.time() - start_time
             print("Training duration: ", elapsed_time)
             break

@@ -30,7 +30,6 @@ def evolution(
     scores = []
     n_elite=int(population*elite_frac)
     current_weights = std*np.random.randn(agent.get_weights_dim())
-    previous_reward = 0
 
     start_time = time.time()
 
@@ -56,7 +55,7 @@ def evolution(
         torch.save(agent.state_dict(), 'hill_climbing_checkpoint.pth')
         
         if i_iteration % 4 == 0:
-            print('Episode {}\tAverage Score: {:.2f}'.format(i_iteration, np.mean(scores_deque)))
+            print(f'Episode {i_iteration}\tAverage Score: {np.mean(scores_deque)}')
         if i_iteration % 100 == 0:
             elapsed_time = time.time() - start_time
             print("Duration: ", elapsed_time)

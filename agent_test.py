@@ -20,7 +20,7 @@ class AgentTest(nn.Module):
         self.layer_sizes = [self.s_size]
         self.layer_sizes += self.h_sizes
         self.layer_sizes.append(self.a_size)
-        print(self.layer_sizes)
+        print(f"Layer sizes: {self.layer_sizes}")
 
         # define layers
         self.layers = []
@@ -72,9 +72,12 @@ class AgentTest(nn.Module):
         episode_return = 0.0
         state = self.env.reset()
         for t in range(max_t):
-            state = torch.from_numpy(state).float().to(device)
+            
+            state_arr = state[0] if isinstance(state, tuple) else state 
+            
+            state = torch.from_numpy(state_arr).float().to(device)
             action = self.forward(state)
-            state, reward, done, _ = self.env.step(action)
+            state, reward, done, _, _ = self.env.step(action)
             episode_return += reward * math.pow(gamma, t)
             if done:
                 break

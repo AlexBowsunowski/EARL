@@ -17,7 +17,7 @@ class Weights():
         self.layer_sizes = [self.s_size]
         self.layer_sizes += self.h_sizes
         self.layer_sizes.append(self.a_size)
-        # define layers
+    
         self.layers = []
         self.layers.append(nn.Linear(self.s_size, self.h_sizes[0]))
         self.layers.append(nn.Linear(self.h_sizes[0], self.h_sizes[1]))
@@ -29,21 +29,15 @@ class Weights():
         a_size = self.a_size
         sizes = self.layer_sizes
 
-        # separate the weights for each layer
         fc_W = [0 for i in range(len(sizes) - 1)]
         fc_b = [0 for i in range(len(sizes) - 1)]
         start = 0
         for i in range(len(sizes) - 1):
-            #print("start", start)
             end = start + (sizes[i]*sizes[i+1]) + sizes[i+1]
-            #print("end", end)
             fc_W[i] = torch.from_numpy(weights[start : start + sizes[i]*sizes[i+1]].reshape(sizes[i], sizes[i+1]))
             fc_b[i] = torch.from_numpy(weights[start + sizes[i]*sizes[i+1] : end])
             start = end
         
-            # set the weights for each layer
-            #print(fc_W[i].shape)
-            #print(self.layers[i].weight.data.shape)
             self.layers[i].weight.data.copy_(fc_W[i].view_as(self.layers[i].weight.data))
             self.layers[i].bias.data.copy_(fc_b[i].view_as(self.layers[i].bias.data))
     

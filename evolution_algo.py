@@ -22,7 +22,7 @@ from agent_test import AgentTest
 num_agents = 2
 agents = []
 for i in range(num_agents):
-    env = gym.make('CartPole-v0')
+    env = gym.make('CartPole-v1')
     env.reset(seed=i) 
     agent = AgentTest(env, state_size=4, action_size=2, seed=i)
     agents.append(agent)
@@ -98,7 +98,7 @@ def evolution(n_iterations=400, max_t=2000, alpha = 0.01, gamma=1.0, std=0.1):
     return scores
 
 if __name__ == '__main__':
-    mp.set_start_method('fork', force=True)
+    set_start_method('spawn', force=True)
     scores = evolution()
 
 
@@ -108,4 +108,4 @@ if __name__ == '__main__':
     plt.plot(np.arange(len(scores)), scores)
     plt.ylabel('Score')
     plt.xlabel('Episode #')
-    plt.savefig('training_result.png')
+    plt.savefig('evolution_algo.png')

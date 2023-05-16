@@ -82,7 +82,7 @@ def evolution(n_iterations=400, max_t=2000, alpha = 0.01, gamma=1.0, std=0.1):
         scores_deque.append(current_reward)
         scores.append(current_reward)
         
-        torch.save(agent.state_dict(), 'checkpoint.pth')
+        torch.save(agent.state_dict(), 'evolution_algo_checkpoint.pth')
         
         if i_iteration % 1 == 0:
             print('Episode {}\tAverage Score: {:.2f}'.format(i_iteration, np.mean(scores_deque)))
